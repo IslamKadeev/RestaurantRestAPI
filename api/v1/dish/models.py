@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, ForeignKey, Float, UniqueConstraint
+from sqlalchemy import Column, String, ForeignKey, Float
 
 from api.v1 import generate_uuid
 from database import Base
