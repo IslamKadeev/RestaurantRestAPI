@@ -1,9 +1,9 @@
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
     server_host: str = "127.0.0.1"
-    server_port: str = 8000
+    server_port: str = "8000"
     database_url: str = 'postgresql://postgres:<password>@localhost/<name_of_the_datbase>'
 
 
