@@ -5,7 +5,7 @@ from typing import List
 class DishBase(BaseModel):
     title: str
     description: str
-    price: float
+    price: str
 
 
 class DishCreate(DishBase):

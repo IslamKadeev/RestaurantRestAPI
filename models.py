@@ -2,14 +2,12 @@ from uuid import uuid4
 
 from sqlalchemy import Column, String, ForeignKey, Numeric
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
+
+from database import Base
 
 
 def generate_uuid():
     return str(uuid4())
-
-
-Base = declarative_base()
 
 
 class Menu(Base):
