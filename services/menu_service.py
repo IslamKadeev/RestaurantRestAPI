@@ -1,4 +1,6 @@
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status, Response
+from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
 
 from sqlalchemy.orm import Session
 
@@ -21,7 +23,10 @@ class MenuService:
         )
 
         if not menu:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="menu not found"
+            )
         
         return menu
     
@@ -35,7 +40,20 @@ class MenuService:
         return menus
     
     def get(self, menu_id: str) -> MenuModel:
-        return self._get(menu_id)
+        menu = self._get(menu_id)
+        
+        submenus = menu.get_submenu_count()
+        dishes_count = menu.get_total_dish_count()
+        
+        menu_response = {
+            'id': menu_id,
+            'title': menu.title,
+            'description': menu.description,
+            'submenus_count': submenus,
+            'dishes_count': dishes_count
+        }
+        
+        return JSONResponse(content=jsonable_encoder(menu_response))
     
     def create(self, creation_data: MenuCreate) -> MenuModel:
         menu = MenuModel(**creation_data.model_dump())
@@ -47,15 +65,24 @@ class MenuService:
     def update(self, menu_id: str, update_data: MenuUpdate) -> MenuModel:
         menu = self._get(menu_id)
         
+        if not menu:
+            raise HTTPException(status_code=status.HTTP_200_OK)
+        
         for field, value in update_data:
             setattr(menu, field, value)
         
         self.session.commit()
+        
         return menu
     
     def delete(self, menu_id: str) -> MenuModel:
         menu = self._get(menu_id)
         
+        print(menu_id)
+        print(menu)
+        
+        if not menu:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+        
         self.session.delete(menu)
         self.session.commit()
-        

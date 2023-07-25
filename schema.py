@@ -1,3 +1,4 @@
+import uuid
 from pydantic import BaseModel
 from typing import List
 
@@ -41,11 +42,17 @@ class Submenu(SubmenuBase):
 class MenuBase(BaseModel):
     title: str
     description: str
+    
+    class Config:
+        orm_mode = True
 
 
 class MenuCreate(MenuBase):
     pass
 
+
+class MenuResponse(MenuBase):
+    id: uuid.UUID
 
 
 class MenuUpdate(MenuBase):
@@ -54,8 +61,3 @@ class MenuUpdate(MenuBase):
 
 class Menu(MenuBase):
     id: str
-    submenus: List[Submenu] = []
-    submenu_count: int 
-
-    class Config:
-        orm_mode = True
