@@ -18,6 +18,9 @@ class Menu(Base):
     description = Column(String, nullable=False)
 
     submenus = relationship('Submenu', backref='menu', cascade='all, delete-orphan')
+    
+    def get_submenu_list(self):
+        return list(self.submenus)
 
     def get_submenu_count(self):
         return len(self.submenus)

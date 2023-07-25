@@ -20,23 +20,27 @@ class Dish(DishBase):
         orm_mode = True
 
 
-class SubmenuBase(BaseModel):
+class SubmenuResponse(BaseModel):
+    id: uuid.UUID
     title: str
     description: str
-
-
-class SubmenuCreate(SubmenuBase):
-    pass
-
-
-class Submenu(SubmenuBase):
-    id: str
-    menu_id: str
-    dishes: List[Dish] = []
-    dish_count: int
-
+    dishes_count: int
+    
     class Config:
         orm_mode = True
+
+
+class SubmenuCreate(BaseModel):
+    title: str
+    description: str
+    menu_id: uuid.UUID
+    
+    class Config:
+        orm_mode = True
+
+
+class SubmenuUpdate(SubmenuCreate):
+    pass
 
 
 class MenuBase(BaseModel):
