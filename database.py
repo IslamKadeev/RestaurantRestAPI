@@ -9,7 +9,7 @@ SQLALCHEMY_DATABASE_URL = settings.database_url
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
-SessionLocal = sessionmaker(
+Session = sessionmaker(
     bind=engine,
     autocommit=False,
     autoflush=False
@@ -19,9 +19,9 @@ SessionLocal = sessionmaker(
 Base = declarative_base()
 
 
-def get_db():
-    db = SessionLocal()
+def get_session():
+    session = Session()
     try:
-        yield db
+        yield session
     finally:
-        db.close()
+        session.close()

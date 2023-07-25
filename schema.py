@@ -47,6 +47,11 @@ class MenuCreate(MenuBase):
     pass
 
 
+
+class MenuUpdate(MenuBase):
+    pass
+
+
 class Menu(MenuBase):
     id: str
     submenus: List[Submenu] = []
