@@ -33,10 +33,14 @@ class SubmenuResponse(BaseModel):
 class SubmenuCreate(BaseModel):
     title: str
     description: str
-    menu_id: uuid.UUID
+    #menu_id: uuid.UUID | None = None
     
     class Config:
         orm_mode = True
+        
+
+class SubmenuCreateId(SubmenuCreate):
+    menu_id: str | None = None
 
 
 class SubmenuUpdate(SubmenuCreate):

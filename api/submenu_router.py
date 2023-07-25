@@ -27,7 +27,16 @@ def get_submenu(
     return service.get(target_submenu_id)
 
 
-
+@router.post(
+    '/{target_menu_id}/submenus',
+    status_code=status.HTTP_201_CREATED,
+    response_model=SubmenuResponse)
+def create_submenu(
+    target_menu_id: str,
+    submenu_data: SubmenuCreate,
+    service: SubmenuService = Depends()
+):
+    return service.create(target_menu_id, submenu_data)
 
 
 @router.patch("/{target_menu_id}/submenus/{target_submenu_id}", response_model=SubmenuResponse)
