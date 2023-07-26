@@ -1,3 +1,4 @@
+from decimal import Decimal
 import uuid
 from pydantic import BaseModel
 from typing import List
@@ -6,18 +7,40 @@ from typing import List
 class DishBase(BaseModel):
     title: str
     description: str
-    price: str
+    price: Decimal
+    
+    class Config:
+        from_attributes = True
 
 
 class DishCreate(DishBase):
+    submenu_id: uuid.UUID | None = None
+    
+
+class DishUpdate(DishBase):
     pass
 
 
-class Dish(DishBase):
-    id: str
-
+class DishResponse(BaseModel):
+    id: uuid.UUID
+    title: str
+    description: str
+    price: Decimal
+    
     class Config:
-        orm_mode = True
+        from_attributes = True
+
+
+class GetDishResponse(BaseModel):
+    id: uuid.UUID
+    title: str
+    description: str
+    price: Decimal
+    submenu_id: uuid.UUID | None = None
+    
+    class Config:
+        from_attributes = True
+
 
 
 class SubmenuResponse(BaseModel):
@@ -27,7 +50,8 @@ class SubmenuResponse(BaseModel):
     dishes_count: int
     
     class Config:
-        orm_mode = True
+        from_attributes = True
+
 
 
 class SubmenuCreate(BaseModel):
@@ -36,7 +60,8 @@ class SubmenuCreate(BaseModel):
     #menu_id: uuid.UUID | None = None
     
     class Config:
-        orm_mode = True
+        from_attributes = True
+
         
 
 class SubmenuCreateId(SubmenuCreate):
@@ -52,7 +77,8 @@ class MenuBase(BaseModel):
     description: str
     
     class Config:
-        orm_mode = True
+        from_attributes = True
+
 
 
 class MenuCreate(MenuBase):
