@@ -54,14 +54,6 @@ class DishService:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                                 detail="dish not found")
         
-        # response = [{
-        #     "id": dish.id,
-        #     "title": dish.title,
-        #     "description": dish.description,
-        #     "price": str(dish.price)
-        # }]
-        
-        # return JSONResponse(content=jsonable_encoder(response))
         return dish
     
     
@@ -96,14 +88,6 @@ class DishService:
            
         self.session.commit()
         
-        # response = [{
-        #     "id": updated_dish.id,
-        #     "title": updated_dish.title,
-        #     "description": updated_dish.description,
-        #     "price": updated_dish.price
-        # }]
-        
-        # return JSONResponse(content=jsonable_encoder(response), status_code=status.HTTP_200_OK)
         return updated_dish
     
     def delete(self, target_dish_id: str) -> DishModel:
